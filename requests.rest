@@ -1,0 +1,14 @@
+# POST http://localhost:5000/api/auth/login
+
+# Content-Type: application/json
+
+# {
+#     "email": "admin@example.com",
+#     "password": "password"
+# }
+
+GET http://localhost:5000/api/users/getUser?customerID=86849233-4cb1-4390-b1a4-d77a59773047
+
+Content-Type: application/json
+
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijg2ODQ5MjMzLTRjYjEtNDM5MC1iMWE0LWQ3N2E1OTc3MzA0NyIsImVtYWlsIjoiaWFtZ2xvdmVyMEBnbWFpbC5jb20iLCJpYXQiOjE3NDIxMzU2OTEsImV4cCI6MTc0MjEzOTI5MX0.a1YyhLsLYTIXGF7miCtUyB86srVhPp0lqpwzMcWj-ZY
