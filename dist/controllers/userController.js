@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updateUser = exports.getUser = void 0;
+exports.deleteUser = exports.updateUser = exports.getUser = void 0;
 const user_models_1 = require("../models/user.models");
 const auth_middleware_1 = require("../middlewares/auth-middleware");
 // Endpoint for getting a user based on their customer ID (Protected Route by middleware)
@@ -70,3 +70,24 @@ exports.updateUser = [
         }
     }),
 ];
+// Endpoint to delete a user
+exports.deleteUser = [auth_middleware_1.authMiddleware, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+        const { customerID } = req.query;
+        try {
+            // Find and delete the customer in one step
+            const deletedCustomer = yield user_models_1.UserModel.findOneAndDelete({ customerID });
+            if (!deletedCustomer) {
+                res.status(404).json({ message: "Customer not found" });
+                return;
+            }
+            // Successful deletion
+            res.status(200).json({
+                message: "User deleted successfully",
+                data: deletedCustomer,
+            });
+        }
+        catch (error) {
+            console.error("Error deleting customer:", error);
+            res.status(500).json({ message: "Error processing user deletion at this time", error: error.message });
+        }
+    })];

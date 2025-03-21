@@ -72,3 +72,28 @@ export const updateUser = [
     }
   },
 ];
+
+// Endpoint to delete a user
+export const deleteUser = [ authMiddleware, async (req: Request, res: Response): Promise<void> => {
+  const { customerID } = req.query;
+
+  try {
+    // Find and delete the customer in one step
+    const deletedCustomer = await UserModel.findOneAndDelete({ customerID });
+
+    if (!deletedCustomer) {
+       res.status(404).json({ message: "Customer not found" });
+       return;
+    }
+
+    // Successful deletion
+    res.status(200).json({
+      message: "User deleted successfully",
+      data: deletedCustomer,
+    });
+
+  } catch (error: any) {
+    console.error("Error deleting customer:", error);
+    res.status(500).json({ message: "Error processing user deletion at this time", error: error.message });
+  }
+}];
