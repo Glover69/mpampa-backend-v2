@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { UserModel } from "../models/user.models";
+import { User, UserModel } from "../models/user.models";
 import { authMiddleware } from "../middlewares/auth-middleware";
 
 
@@ -19,7 +19,56 @@ export const getUser = [
         res.status(200).send(customerInfo);
       }
     } catch (error) {
-        res.status(400).send(`Failed to find ${req?.params?.customerID}`);
+      console.error("Get user error:", error);
+      res.status(500).json({ message: "Unable to process getting user at this time", error: error });
+    }
+  },
+];
+
+
+// Endpoint to edit customer details (Undefined fields are filtered out)
+export const updateUser = [
+  authMiddleware,
+  async (req: Request, res: Response): Promise<void> => {
+    try {
+      const { customerID } = req.query;
+      const { firstName, lastName, profilePhoto, phoneNumber } = req.body;
+  
+      // Build the update object dynamically
+      const updateData: Partial<User> = {
+        firstName,
+        lastName,
+        profilePhoto,
+        phoneNumber,
+      };
+  
+      // Filter out undefined or empty values
+      Object.keys(updateData).forEach(
+        (key) =>
+          updateData[key as keyof User] === undefined || updateData[key as keyof User] === "" &&
+          delete updateData[key as keyof User]
+      );
+  
+      // Find the user by customerID and update their information
+      const updatedUser = await UserModel.findOneAndUpdate(
+        { customerID },
+        updateData,
+        { new: true }
+      );
+  
+      if (updatedUser) {
+        res.status(200).json({
+          message: "User updated successfully",
+          user: updatedUser,
+        });
+      } else {
+        res.status(404).json({
+          message: "User not found",
+        });
+      }
+    } catch (error) {
+      console.error("Error updating user:", error);
+      res.status(500).json({ message: "Unable to process user update at this time", error: error });
     }
   },
 ];

@@ -7,4 +7,5 @@ const express_1 = __importDefault(require("express"));
 const userController_1 = require("../controllers/userController");
 const router = express_1.default.Router();
 router.get("/getUser", userController_1.getUser);
+router.put("/update-user", userController_1.updateUser);
 exports.default = router;
