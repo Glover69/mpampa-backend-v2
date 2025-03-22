@@ -6,7 +6,7 @@ import bcrypt from "bcrypt";
 import { SecretModel } from "../models/secret.models";
 import { v4 as uuidv4 } from "uuid";
 import { sendVerificationEmail } from "../utils/mailer";
-import { authMiddleware } from "../middlewares/auth-middleware";
+import { authMiddleware } from "../middlewares/auth.middleware";
 import crypto from "crypto"
 
 dotenv.config();
@@ -63,7 +63,7 @@ export const signup = async (req: Request, res: Response): Promise<void> => {
     const hashedPassword = await bcrypt.hash(password, salt);
     const customerID = uuidv4();
 
-    const otp = await sendVerificationEmail(email);
+    const otp = await sendVerificationEmail(email, "otp");
     const otpExpires = new Date(Date.now() + 60 * 60 * 1000);
 
     // Structure for user's data

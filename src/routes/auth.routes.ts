@@ -1,9 +1,9 @@
 import express from "express";
-import { login, signup, verifyOTP, logout, resendOTP, requestPasswordReset, passwordReset, changePassword } from "../controllers/authController";
+import { login, signup, verifyOTP, resendOTP, requestPasswordReset, passwordReset, changePassword, logout } from "../controllers/auth.controller";
 const router = express.Router();
 
 router.post("/login", login)
-router.post("/signup", signup)
+router.post("/register", signup)
 router.post("/verify-otp", verifyOTP)
 router.post("/resend-otp", resendOTP)
 router.post("/request-password-reset", requestPasswordReset)

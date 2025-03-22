@@ -5,6 +5,7 @@ import cors from "cors";
 import userRoutes from "./routes/user.routes";
 import authRoutes from "./routes/auth.routes";
 import utilsRoutes from "./routes/utils.routes";
+import orderRoutes from "./routes/order.routes";
 
 dotenv.config();
 connectDB();
@@ -16,7 +17,7 @@ app.use(cors());
 app.use("/api/users", userRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/utils", utilsRoutes);
-
+app.use("/api/orders", orderRoutes);
 
 
 const PORT = 8080;

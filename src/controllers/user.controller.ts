@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { User, UserModel } from "../models/user.models";
-import { authMiddleware } from "../middlewares/auth-middleware";
+import { authMiddleware } from "../middlewares/auth.middleware";
 
 
 // Endpoint for getting a user based on their customer ID (Protected Route by middleware)
