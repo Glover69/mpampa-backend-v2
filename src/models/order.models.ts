@@ -23,13 +23,14 @@ interface Order extends Document {
   updatedAt: Date;
 }
 
-interface Items {
+export interface Items {
   productID: string;
   productName: string;
   productSize: string;
   productQuantity: number;
   productImage: string;
   productPrice: number;
+  itemID: string
 }
 
 interface ShippingAddress {

@@ -1,11 +1,14 @@
 import express from "express";
-import { createOrder, getAllUsersOrders, getSpecificOrder } from "../controllers/orders.controller";
+import { getAllUsersOrders, getSpecificOrder, inititatePayment, verifyPayment } from "../controllers/order.controller";
 
 
 const router = express.Router()
 
-router.post("/create", createOrder)
 router.get("/all", getAllUsersOrders)
 router.get("/one", getSpecificOrder)
+
+// Paystack Endpoints
+router.post("/paystack/initiate-payment", inititatePayment)
+router.post("/paystack/verify-payment", verifyPayment)
 
 export default router;
